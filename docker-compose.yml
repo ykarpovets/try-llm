@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+#    web:
+#        build: .
+#        ports:
+#        - "5000:5000"
+#        volumes:
+#        - ./dist:/app
+#        depends_on:
+#        - db
+    db:
+        hostname: 127.0.0.1
+        image: pgvector/pgvector:pg16
+        ports:
+            - 5432:5432
+        restart: always
+        environment:
+            - POSTGRES_DB=langchain
+            - POSTGRES_USER=lcuser
+            - POSTGRES_PASSWORD=lcpassword
+        volumes:
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql

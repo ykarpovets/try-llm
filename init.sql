@@ -1,0 +1,5 @@
+CREATE TABLE candidates (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    cv VARCHAR(255) NOT NULL
+);

@@ -1,0 +1,1 @@
+export const OLLAMA_MODEL = "mistral:7b-instruct";
