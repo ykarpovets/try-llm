@@ -8,10 +8,10 @@ import {OLLAMA_MODEL} from "./constants.ts";
 const model = new ChatOllama({
   baseUrl: "http://localhost:11434", // Default value
   model: OLLAMA_MODEL,
-  temperature: 0
+  temperature: 0.5
 });
 
-const template = `You are the useful resume assistant.
+const template = `You are a useful assistant in the analysis of resumes.
 Provide concise answer based only on the following context:
 
 {context}
@@ -25,7 +25,8 @@ Answer:`;
 
 const prompt = ChatPromptTemplate.fromTemplate(template);
 
-async function extractDetailsFromCV(cv: string) {
+async function extractDetailsFromCV(query: string, cv: string) {
+  console.log(`Query "${query}" from CV ${cv}`);
   const vectorStore = await getVectorStore();
   const chain = RunnableSequence.from([
     {
@@ -45,7 +46,8 @@ async function extractDetailsFromCV(cv: string) {
     new StringOutputParser(),
   ]);
   
-  const response = await chain.invoke("what is the current profession?", { configurable: { filter: { name: cv } } });
+  const response = await chain.invoke(query, { configurable: { filter: { name: cv } } });
+  console.log(`Answer: "${response}" for CV ${cv}`);
   return response;
 }
 

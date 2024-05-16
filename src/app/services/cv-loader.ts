@@ -7,9 +7,9 @@ import {randomUUID} from "node:crypto";
 export async function loadCV(cvFile: File) {
     
     console.log("Load CV file and split into chunks");
-    const loader = new PDFLoader(cvFile, {splitPages: false});
+    const loader = new PDFLoader(cvFile);
 
-    const doc = await loader.load();
+    const docs = await loader.load();
 
     /* Additional steps : Split text into chunks with any TextSplitter. You can then use it as context or save it to memory afterwards. */
     const textSplitter = new RecursiveCharacterTextSplitter({
@@ -17,15 +17,15 @@ export async function loadCV(cvFile: File) {
         chunkOverlap: 200,
     });
 
-    const splitDocs = await textSplitter.splitDocuments(doc);
-    splitDocs.forEach((doc) => {
-        doc.metadata.name = cvFile.name;
-        doc.metadata.type = cvFile.type;
+    const splitChunks = await textSplitter.splitDocuments(docs);
+    splitChunks.forEach((chunk) => {
+        chunk.metadata.name = cvFile.name;
+        chunk.metadata.type = cvFile.type;
     });
     
     console.log("Add documents to vector store");
     const vectorStore = await getVectorStore();
-    await vectorStore.addDocuments(splitDocs);
+    await vectorStore.addDocuments(splitChunks);
 
     console.log("Add candidate to database");
     await addCandidate("User " + randomUUID(), cvFile.name);

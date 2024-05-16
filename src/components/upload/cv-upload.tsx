@@ -3,21 +3,23 @@ import React, {useState} from 'react';
 import {useForm, SubmitHandler} from 'react-hook-form';
 import {uploadCV} from "../../app/actions/uploadCV.ts";
 import Loader from '../loader/loader';
-import { useRouter } from 'next/navigation';
 import './styles.css';
 
 type FormFields = {
     cvfile: FileList;
 };
 
-export default function CvUpload() {
+export type CvUploadProps = {
+    onSuccessSubmit: () => void;
+}
+
+export default function CvUpload({onSuccessSubmit}: CvUploadProps) {
     const { 
         register, 
         reset, 
         handleSubmit,
         formState: { errors },
     } = useForm<FormFields>();
-    const router = useRouter();
     const [loading, setLoading] = useState(false);
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
@@ -26,10 +28,10 @@ export default function CvUpload() {
             const formData = new FormData();
             formData.append('cvfile', data.cvfile[0]);
             await uploadCV(formData);
+            onSuccessSubmit();
         } finally {
             setLoading(false);
             reset();
-            router.refresh();
         }
         
     };

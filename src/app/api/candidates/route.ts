@@ -1,21 +1,20 @@
-import { NextResponse } from 'next/server';
-import { getCandidates} from "../../services/db.ts";
+import { NextRequest, NextResponse } from 'next/server';
+import {getCandidate, getCandidates} from "../../services/db.ts";
 import { extractDetailsFromCV } from "../../services/llm/retriver.ts";
 
 async function getProfession(cv: string) {
-    return await extractDetailsFromCV(cv);
-    
-} 
-export async function GET() {
+    return await extractDetailsFromCV("what is the candidate profession?", cv);
+
+}
+
+export async function GET(request: NextRequest) {
+    const searchParams = request.nextUrl.searchParams;
+    const id = searchParams.get('id') as unknown;
+    if (id) {
+        const candidate = await getCandidate(id as number);
+        const profession = await getProfession(candidate.cv);
+        return NextResponse.json({profession});
+    }
     const candidates = await getCandidates();
-    const candidatesWithProfession = await Promise.all(
-        candidates.map(async (candidate) => {
-            const profession = await getProfession(candidate.cv);
-            return {
-                ...candidate,
-                profession,
-            };
-        })
-    );
-    return NextResponse.json(candidatesWithProfession);
+    return NextResponse.json(candidates);
 }

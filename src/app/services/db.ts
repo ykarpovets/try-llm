@@ -27,7 +27,7 @@ async function addCandidate(candidate: string, cv: string) {
   }
 } 
 
-async function getCandidates(): Promise<Array<{name: string, cv: string}>> {
+async function getCandidates(): Promise<Array<{id: number, name: string, cv: string}>> {
   const client = await pool.connect();
   try {
     const res = await client.query("SELECT * FROM candidates");
@@ -37,5 +37,15 @@ async function getCandidates(): Promise<Array<{name: string, cv: string}>> {
   }
 }
 
+async function getCandidate(id: number): Promise<{name: string, cv: string}> {
+  const client = await pool.connect();
+  try {
+    const res = await client.query("SELECT * FROM candidates WHERE id = $1", [id]);
+    return res.rows[0];
+  } finally {
+    client.release();
+  }
+}
+
 export default pool;
-export { addCandidate, getCandidates };
+export { addCandidate, getCandidates, getCandidate };
