@@ -4,6 +4,7 @@ import { StringOutputParser } from "@langchain/core/output_parsers";
 import getVectorStore from "./vector-store";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import {OLLAMA_MODEL} from "./constants.ts";
+import logger from "@/logger.ts";
 
 const model = new ChatOllama({
   baseUrl: "http://localhost:11434", // Default value
@@ -26,7 +27,7 @@ Answer:`;
 const prompt = ChatPromptTemplate.fromTemplate(template);
 
 async function extractDetailsFromCV(query: string, cv: string) {
-  console.log(`Query "${query}" from CV ${cv}`);
+  logger.info(`Query "${query}" from CV ${cv}`);
   const vectorStore = await getVectorStore();
   const chain = RunnableSequence.from([
     {
@@ -35,9 +36,8 @@ async function extractDetailsFromCV(query: string, cv: string) {
           throw new Error("No config");
         }
         const { configurable } = options.config;
-        return JSON.stringify(
-            await vectorStore.asRetriever(configurable).getRelevantDocuments(input)
-        );
+        const docs = await vectorStore.asRetriever(configurable).getRelevantDocuments(input);
+        return JSON.stringify(docs);
       },
       question: new RunnablePassthrough(),
     },
@@ -46,8 +46,8 @@ async function extractDetailsFromCV(query: string, cv: string) {
     new StringOutputParser(),
   ]);
   
-  const response = await chain.invoke(query, { configurable: { filter: { name: cv } } });
-  console.log(`Answer: "${response}" for CV ${cv}`);
+  const response = await chain.invoke(query, { configurable: { filter: { namespace: cv } } });
+  logger.info(`Answer: "${response}" for CV ${cv}`);
   return response;
 }
 

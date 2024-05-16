@@ -2,11 +2,12 @@ import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import getVectorStore from "./llm/vector-store.ts";
 import { addCandidate } from "./db.ts";
-import {randomUUID} from "node:crypto";
+import randomName from "node-random-name";
+import logger from "@/logger.ts";
 
 export async function loadCV(cvFile: File) {
     
-    console.log("Load CV file and split into chunks");
+    logger.info("Load CV file and split into chunks");
     const loader = new PDFLoader(cvFile);
 
     const docs = await loader.load();
@@ -19,16 +20,16 @@ export async function loadCV(cvFile: File) {
 
     const splitChunks = await textSplitter.splitDocuments(docs);
     splitChunks.forEach((chunk) => {
-        chunk.metadata.name = cvFile.name;
+        chunk.metadata.namespace = cvFile.name;
         chunk.metadata.type = cvFile.type;
     });
     
-    console.log("Add documents to vector store");
+    logger.info("Add documents to vector store");
     const vectorStore = await getVectorStore();
     await vectorStore.addDocuments(splitChunks);
 
-    console.log("Add candidate to database");
-    await addCandidate("User " + randomUUID(), cvFile.name);
+    logger.info("Add candidate to database");
+    await addCandidate(randomName(), cvFile.name);
 }
 
 export default {

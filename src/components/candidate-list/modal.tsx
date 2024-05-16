@@ -7,6 +7,7 @@ import './modal.css';
 
 type DetailProps = {
   profession?: string;
+  experienceYears?: string;
 }
 
 function Modal() {
@@ -38,11 +39,12 @@ function Modal() {
                   {isLoading ? <p>Loading...</p> : (
                       <div>
                         <h1>{detail?.profession}</h1>
+                        <h1>{detail?.experienceYears}</h1>
                       </div>
                   )}
                   <br/>
                   <Link href={pathname}>
-                    <button type="button" className="bg-red-500 text-white p-2">Close Modal</button>
+                    <button type="button" className="bg-red-500 text-white p-2">Close</button>
                   </Link>
                 </div>
               </div>

@@ -13,18 +13,22 @@
   },
   "dependencies": {
     "@langchain/community": "^0.0.57",
+    "human-names": "^1.0.12",
     "langchain": "0.0.207",
     "next": "^14.2.3",
+    "node-random-name": "^1.0.1",
     "pdf-parse": "^1.1.1",
     "pg": "^8.11.5",
     "react-hook-form": "^7.51.4",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "winston": "^3.13.0"
   },
   "overrides": {
     "@langchain/core": "0.1.5"
   },
   "devDependencies": {
     "@types/node": "^20.4.5",
+    "@types/node-random-name": "^1.0.2",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",

@@ -6,6 +6,7 @@ import {
 import {OLLAMA_MODEL} from "./constants.ts";
 
 import pool from "../db";
+import logger from "@/logger.ts";
 
 const config = {
   pool: pool,
@@ -26,11 +27,13 @@ let vectorStore: PGVectorStore;
 
 export default async function getVectorStore() {
   if (!vectorStore) {
+    logger.info("Initialize vector store");
     vectorStore = await PGVectorStore.initialize(
       new OllamaEmbeddings({ model: OLLAMA_MODEL }),
       config
     );
   }
+  logger.info("Return vector store");
   return vectorStore;
 }
 
