@@ -1,7 +1,6 @@
 'use client';
 import React, {useState} from 'react';
 import {useForm, SubmitHandler} from 'react-hook-form';
-import {uploadCV} from "../../app/actions/uploadCV.ts";
 import Loader from '../loader/loader';
 import './styles.css';
 
@@ -27,7 +26,10 @@ export default function CvUpload({onSuccessSubmit}: CvUploadProps) {
             setLoading(true);
             const formData = new FormData();
             formData.append('cvfile', data.cvfile[0]);
-            await uploadCV(formData);
+            await fetch('/api/upload', {
+                method: 'POST',
+                body: formData,
+            });
             onSuccessSubmit();
         } finally {
             setLoading(false);

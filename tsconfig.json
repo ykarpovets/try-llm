@@ -3,6 +3,7 @@
     "baseUrl": "src",
     "paths": {
       "@/*": ["*"],
+      "@/services/*": ["app/services/*"],
     },
     "target": "ES2020",
     "useDefineForClassFields": true,

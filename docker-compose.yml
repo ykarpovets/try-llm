@@ -1,5 +1,8 @@
 version: '3.9'
 
+networks:
+    net:
+        driver: bridge
 services:
 #    web:
 #        build: .
@@ -21,3 +24,19 @@ services:
             - POSTGRES_PASSWORD=lcpassword
         volumes:
             - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    chroma:
+        image: ghcr.io/chroma-core/chroma:latest
+        environment:
+            - IS_PERSISTENT=TRUE
+        volumes:
+            # Default configuration for persist_directory in chromadb/config.py
+            # Currently it's located in "/chroma/chroma/"
+            - chroma-data:/chroma/chroma/
+        ports:
+            - 8000:8000
+        networks:
+            - net
+
+volumes:
+    chroma-data:
+        driver: local

@@ -13,6 +13,9 @@
   },
   "dependencies": {
     "@langchain/community": "^0.0.57",
+    "@xenova/transformers": "^2.17.1",
+    "chromadb": "^1.8.1",
+    "chromadb-default-embed": "^2.13.2",
     "human-names": "^1.0.12",
     "langchain": "0.0.207",
     "next": "^14.2.3",
@@ -22,9 +25,6 @@
     "react-hook-form": "^7.51.4",
     "server-only": "^0.0.1",
     "winston": "^3.13.0"
-  },
-  "overrides": {
-    "@langchain/core": "0.1.5"
   },
   "devDependencies": {
     "@types/node": "^20.4.5",
@@ -36,6 +36,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
+    "node-loader": "^2.0.0",
     "typescript": "^5.4.5"
   }
 }

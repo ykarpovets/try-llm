@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {getCandidate, getCandidates} from "../../services/db.ts";
+import {getCandidate, getCandidates, Candidate} from "../../services/db.ts";
 import { extractDetailsFromCV } from "../../services/llm/retriver.ts";
 
-async function getProfession(cv: string) {
-    return await extractDetailsFromCV("what is the current profession?", cv);
+async function getProfession(c: Candidate) {
+    return await extractDetailsFromCV("what is the current profession?", c);
 }
 
-async function getYearsOfExperience(cv: string) {
-    return await extractDetailsFromCV("what is total years of commercial experience?", cv);
+async function getYearsOfExperience(c: Candidate) {
+    return await extractDetailsFromCV("what is total years of commercial experience?", c);
 }
 
 
@@ -16,8 +16,8 @@ export async function GET(request: NextRequest) {
     const id = searchParams.get('id') as unknown;
     if (id) {
         const candidate = await getCandidate(id as number);
-        const profession = await getProfession(candidate.cv);
-        const experienceYears = await getYearsOfExperience(candidate.cv);
+        const profession = await getProfession(candidate);
+        const experienceYears = await getYearsOfExperience(candidate);
         return NextResponse.json({profession, experienceYears});
     }
     const candidates = await getCandidates();

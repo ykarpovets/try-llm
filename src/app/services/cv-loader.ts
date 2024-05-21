@@ -24,10 +24,9 @@ export async function loadCV(cvFile: File) {
         chunk.metadata.type = cvFile.type;
     });
     
-    logger.info("Add documents to vector store");
     const vectorStore = await getVectorStore();
+    logger.info("Add documents to vector store");
     await vectorStore.addDocuments(splitChunks);
-
     logger.info("Add candidate to database");
     await addCandidate(randomName(), cvFile.name);
 }

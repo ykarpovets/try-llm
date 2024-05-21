@@ -8,6 +8,12 @@ const pool = new pg.Pool({
   database: "langchain",
 });
 
+type Candidate = {
+  id: number;
+  name: string;
+  cv: string;
+};
+
 async function addCandidate(candidate: string, cv: string) {
   const client = await pool.connect();
   try {
@@ -27,7 +33,7 @@ async function addCandidate(candidate: string, cv: string) {
   }
 } 
 
-async function getCandidates(): Promise<Array<{id: number, name: string, cv: string}>> {
+async function getCandidates(): Promise<Array<Candidate>> {
   const client = await pool.connect();
   try {
     const res = await client.query("SELECT * FROM candidates");
@@ -37,7 +43,7 @@ async function getCandidates(): Promise<Array<{id: number, name: string, cv: str
   }
 }
 
-async function getCandidate(id: number): Promise<{name: string, cv: string}> {
+async function getCandidate(id: number): Promise<Candidate> {
   const client = await pool.connect();
   try {
     const res = await client.query("SELECT * FROM candidates WHERE id = $1", [id]);
@@ -48,4 +54,5 @@ async function getCandidate(id: number): Promise<{name: string, cv: string}> {
 }
 
 export default pool;
+export type { Candidate };
 export { addCandidate, getCandidates, getCandidate };
