@@ -8,6 +8,12 @@
   }
 }
 
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -40,10 +46,4 @@ body {
   width: 100%;
   max-width: 800px;
   padding: 1rem;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
 }
