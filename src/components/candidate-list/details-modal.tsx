@@ -8,6 +8,7 @@ import './modal.css';
 type DetailProps = {
   profession?: string;
   experienceYears?: string;
+  summary?: string;
 }
 
 function DetailsModal() {
@@ -38,10 +39,12 @@ function DetailsModal() {
                 <div className="flex flex-col items-center">
                   {isLoading ? <p>Loading...</p> : (
                       <div className="flex flex-col">
-                        <label htmlFor="profession">Profession:</label>
+                        <label htmlFor="profession" className="font-bold">Profession:</label>
                         <span id="profession" className="pb-5">{detail?.profession}</span>
-                        <label htmlFor="years">Years of experience:</label>
-                        <span id="years">{detail?.experienceYears}</span>
+                        <label htmlFor="years" className="font-bold">Years of experience:</label>
+                        <span id="years" className="pb-5">{detail?.experienceYears}</span>
+                        <label htmlFor="summary" className="font-bold">Summary:</label>
+                        <span id="summary" className="pb-5">{detail?.summary}</span>
                       </div>
                   )}
                   <br/>

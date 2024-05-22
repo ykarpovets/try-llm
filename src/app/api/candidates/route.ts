@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {getCandidate, getCandidates, Candidate} from "@/services/db";
-import { extractDetailsFromCV } from "@/services/llm/retriver";
+import {extractDetailsFromCV, getSummaryForCandidate} from "@/services/llm/retriver";
 
 async function getProfession(c: Candidate) {
     return await extractDetailsFromCV("what is the current profession?", c);
@@ -19,7 +19,8 @@ export async function GET(request: NextRequest) {
         const candidate = await getCandidate(id as number);
         const profession = await getProfession(candidate);
         const experienceYears = await getYearsOfExperience(candidate);
-        return NextResponse.json({profession, experienceYears});
+        const summary = await getSummaryForCandidate(candidate);
+        return NextResponse.json({profession, experienceYears, summary});
     }
     const candidates = await getCandidates();
     return NextResponse.json(candidates);
