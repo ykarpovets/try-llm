@@ -1,6 +1,6 @@
 import { Chroma, ChromaLibArgs } from "@langchain/community/vectorstores/chroma";
 import {OllamaEmbeddings} from "@langchain/community/embeddings/ollama";
-import {OLLAMA_MODEL} from "../constants.ts";
+import {OLLAMA_MODEL} from "../constants";
 
 const embeddings = new OllamaEmbeddings({ model: OLLAMA_MODEL });
 

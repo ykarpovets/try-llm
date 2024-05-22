@@ -3,7 +3,7 @@ import {
   DistanceStrategy,
   PGVectorStore,
 } from "@langchain/community/vectorstores/pgvector";
-import {OLLAMA_MODEL} from "../constants.ts";
+import {OLLAMA_MODEL} from "../constants";
 
 import pool from "@/services/db";
 

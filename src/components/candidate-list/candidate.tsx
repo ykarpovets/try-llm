@@ -1,4 +1,5 @@
 'use client';
+
 import Link from "next/link";
 
 import React from 'react';
@@ -11,9 +12,9 @@ export type CandidateProps = {
 
 export default function Candidate({id, name, cv}: CandidateProps) {
     return (
-        <div>
-            <h1><Link href={`?detail=true&id=${id}`}>{name}</Link></h1>
-          <p>CV: {cv}</p>
+        <div className="border-b border-slate-600 h-10 justify-between flex">
+            <span className="font-bold flex flex-col justify-center"><Link href={`?detail=true&id=${id}`}>{name}</Link></span>
+          <span className="flex flex-col justify-center">CV: {cv}</span>
         </div>
     )
 }

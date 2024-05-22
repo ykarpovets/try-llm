@@ -10,7 +10,7 @@ type DetailProps = {
   experienceYears?: string;
 }
 
-function Modal() {
+function DetailsModal() {
   const searchParams = useSearchParams();
   const modal = searchParams.get("detail");
   const id = searchParams.get("id");
@@ -37,14 +37,14 @@ function Modal() {
               <div className="modal-content">
                 <div className="flex flex-col items-center">
                   {isLoading ? <p>Loading...</p> : (
-                      <div>
-                        <h1>{detail?.profession}</h1>
-                        <h1>{detail?.experienceYears}</h1>
+                      <div className="flex flex-col">
+                        <span className="pb-5">{detail?.profession}</span>
+                        <span>{detail?.experienceYears}</span>
                       </div>
                   )}
                   <br/>
                   <Link href={pathname}>
-                    <button type="button" className="bg-red-500 text-white p-2">Close</button>
+                    <button type="button" className="btn">Close</button>
                   </Link>
                 </div>
               </div>
@@ -54,4 +54,4 @@ function Modal() {
   );
 }
 
-export default Modal;
+export default DetailsModal;

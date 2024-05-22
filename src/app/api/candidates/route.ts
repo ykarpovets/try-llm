@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {getCandidate, getCandidates, Candidate} from "../../services/db.ts";
-import { extractDetailsFromCV } from "../../services/llm/retriver.ts";
+import {getCandidate, getCandidates, Candidate} from "@/services/db";
+import { extractDetailsFromCV } from "@/services/llm/retriver";
 
 async function getProfession(c: Candidate) {
     return await extractDetailsFromCV("what is the current profession?", c);
@@ -10,6 +10,7 @@ async function getYearsOfExperience(c: Candidate) {
     return await extractDetailsFromCV("what is total years of commercial experience?", c);
 }
 
+export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;

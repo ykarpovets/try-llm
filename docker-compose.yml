@@ -23,7 +23,7 @@ services:
             - POSTGRES_USER=lcuser
             - POSTGRES_PASSWORD=lcpassword
         volumes:
-            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+            - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
     chroma:
         image: ghcr.io/chroma-core/chroma:latest
         environment:

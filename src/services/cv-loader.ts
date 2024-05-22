@@ -1,11 +1,13 @@
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
-import getVectorStore from "./llm/vector-store.ts";
-import { addCandidate } from "./db.ts";
+import getVectorStore from "./llm/vector-store";
+import { addCandidate } from "./db";
 import randomName from "node-random-name";
-import logger from "@/logger.ts";
-
-export async function loadCV(cvFile: File) {
+import logger from "@/logger";
+async function loadCV(cvFile: File) {
+    await addCandidate(randomName(), cvFile.name);
+}
+async function loadCV2(cvFile: File) {
     
     logger.info("Load CV file and split into chunks");
     const loader = new PDFLoader(cvFile);

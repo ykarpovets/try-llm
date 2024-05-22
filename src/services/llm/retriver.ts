@@ -3,9 +3,9 @@ import { RetrievalQAChain } from "langchain/chains";
 //import { StringOutputParser } from "@langchain/core/output_parsers";
 import getVectorStore from "./vector-store";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
-import {OLLAMA_MODEL} from "./constants.ts";
-import logger from "@/logger.ts";
-import {Candidate} from "@/services/db.ts";
+import {OLLAMA_MODEL} from "./constants";
+import logger from "@/logger";
+import {Candidate} from "@/services/db";
 
 const llm = new ChatOllama({
   baseUrl: "http://localhost:11434", // Default value
