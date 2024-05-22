@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { BaseChatModel } from "@langchain/core/language_models/chat_models";
 import { ChatOllama } from "@langchain/community/chat_models/ollama";
 import {OLLAMA_MODEL} from "@/services/llm/constants";

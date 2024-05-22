@@ -1,5 +1,3 @@
-import 'server-only';
-
 import { VectorStore } from "@langchain/core/vectorstores";
 import getChromaVectorStore from "@/services/llm/vector-store/chroma-vector-store";
 import logger  from "@/logger";

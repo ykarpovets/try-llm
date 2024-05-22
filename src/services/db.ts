@@ -1,3 +1,5 @@
+import 'server-only';
+
 import pg from "pg";
 
 const pool = new pg.Pool({
