@@ -1,4 +1,6 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+The purpose of it is to be able to experiment with RAG based on the uploaded CV files to retrieve candidate  current profession and years of experience and provide summary.
+CV file samples are ontained from the dataset https://www.kaggle.com/datasets/snehaanbhawal/resume-dataset.
 
 ## Getting Started
 
