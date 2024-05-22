@@ -2,7 +2,17 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- [Node.js 18.17](https://nodejs.org/) or later.
+- [Rancher Desktop](https://docs.rancherdesktop.io/getting-started/installation/) or [Colima](https://github.com/abiosoft/colima) or use Docker Desktop.
+
+Run docker containers:
+```bash
+docker-compose up -d
+```
+
+Run the development server:
 
 ```bash
 npm run dev
