@@ -5,9 +5,6 @@ import { addCandidate } from "./db";
 import randomName from "node-random-name";
 import logger from "@/logger";
 async function loadCV(cvFile: File) {
-    await addCandidate(randomName(), cvFile.name);
-}
-async function loadCV2(cvFile: File) {
     
     logger.info("Load CV file and split into chunks");
     const loader = new PDFLoader(cvFile);
