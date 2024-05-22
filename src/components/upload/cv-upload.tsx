@@ -21,16 +21,21 @@ export default function CvUpload() {
     } = useForm<FormFields>();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [hasError, setHasError] = useState(false);
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         try {
+            setHasError(false);
             setLoading(true);
             const formData = new FormData();
             formData.append('cvfile', data.cvfile[0]);
-            await fetch('/api/upload', {
+            const res = await fetch('/api/upload', {
                 method: 'POST',
                 body: formData,
             });
+            if (!res.ok) {
+                setHasError(true);
+            }
         } finally {
             setLoading(false);
             router.refresh();
@@ -55,6 +60,7 @@ export default function CvUpload() {
                 </div>
             </form>
             {loading && <Loader/>}
+            {hasError && <div className="text-red-500">Error uploading CV</div>}
         </>
     );
 }

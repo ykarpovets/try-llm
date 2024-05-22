@@ -1,8 +1,6 @@
 import { Chroma, ChromaLibArgs } from "@langchain/community/vectorstores/chroma";
-import {OllamaEmbeddings} from "@langchain/community/embeddings/ollama";
-import {OLLAMA_MODEL} from "../constants";
-
-const embeddings = new OllamaEmbeddings({ model: OLLAMA_MODEL });
+import { getEmbeddings } from "@/services/llm/model";
+import logger from "@/logger";
 
 const chromaConfig: ChromaLibArgs = {
   collectionName: "embeddings",
@@ -14,5 +12,7 @@ const chromaConfig: ChromaLibArgs = {
 
 
 export default async function getChromaVectorStore() {
+  logger.info("use Chroma vector store");
+  const embeddings = getEmbeddings();
   return new Chroma(embeddings, chromaConfig);
 }

@@ -1,17 +1,11 @@
-import { ChatOllama } from "@langchain/community/chat_models/ollama";
 import { RetrievalQAChain } from "langchain/chains";
-//import { StringOutputParser } from "@langchain/core/output_parsers";
 import getVectorStore from "./vector-store";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
-import {OLLAMA_MODEL} from "./constants";
+import { getChatModel } from "./model";
 import logger from "@/logger";
 import {Candidate} from "@/services/db";
 
-const llm = new ChatOllama({
-  baseUrl: "http://localhost:11434", // Default value
-  model: OLLAMA_MODEL,
-  temperature: 0.5
-});
+
 
 const template = `
 You are a useful assistant helping to analyse resume of candidate {candidate}.
@@ -32,7 +26,7 @@ async function extractDetailsFromCV(query: string, candidate: Candidate) {
   logger.info(`Query "${query}" for candidate ${candidate.name}`);
   const vectorStore = await getVectorStore();
   const retriever = vectorStore.asRetriever({ filter: { namespace: candidate.cv } });
-
+  const llm = getChatModel();
   const chain = RetrievalQAChain.fromLLM(llm, retriever, { prompt });
   
   const response = await chain.call({ query, candidate: candidate.name });

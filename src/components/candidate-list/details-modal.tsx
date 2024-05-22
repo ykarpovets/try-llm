@@ -15,7 +15,7 @@ function DetailsModal() {
   const modal = searchParams.get("detail");
   const id = searchParams.get("id");
   const pathname = usePathname();
-  const [detail, setDetails] = useState<DetailProps>(null);
+  const [detail, setDetails] = useState<DetailProps | null >(null);
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -38,8 +38,10 @@ function DetailsModal() {
                 <div className="flex flex-col items-center">
                   {isLoading ? <p>Loading...</p> : (
                       <div className="flex flex-col">
-                        <span className="pb-5">{detail?.profession}</span>
-                        <span>{detail?.experienceYears}</span>
+                        <label htmlFor="profession">Profession:</label>
+                        <span id="profession" className="pb-5">{detail?.profession}</span>
+                        <label htmlFor="years">Years of experience:</label>
+                        <span id="years">{detail?.experienceYears}</span>
                       </div>
                   )}
                   <br/>

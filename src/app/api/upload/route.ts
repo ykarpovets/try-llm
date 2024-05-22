@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import logger from "@/logger.ts";
-import cvLoader from "@/services/cv-loader.ts";
+import logger from "@/logger";
+import cvLoader from "@/services/cv-loader";
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData();

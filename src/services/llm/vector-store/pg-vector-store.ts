@@ -1,11 +1,10 @@
-import { OllamaEmbeddings } from "@langchain/community/embeddings/ollama";
+import pool from "@/services/db";
 import {
   DistanceStrategy,
   PGVectorStore,
 } from "@langchain/community/vectorstores/pgvector";
-import {OLLAMA_MODEL} from "../constants";
-
-import pool from "@/services/db";
+import {getEmbeddings} from "@/services/llm/model";
+import logger from "@/logger";
 
 const config = {
   pool: pool,
@@ -25,9 +24,8 @@ const config = {
 
 
 export default async function getPgVectorStore() {
-    return await PGVectorStore.initialize(
-      new OllamaEmbeddings({ model: OLLAMA_MODEL }),
-      config
-    );
+  logger.info("use PGVectorStore");
+  const embeddings = getEmbeddings();
+    return await PGVectorStore.initialize(embeddings, config);
 }
 

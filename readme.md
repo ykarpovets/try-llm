@@ -32,6 +32,18 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## LLM models
+
+By default app uses Ollama model.
+
+If you want to use OpenAI model then create env.local file in the root of the project and specify:
+```
+LLM_MODEL=OpenAI
+VECTOR_STORE=chroma
+OPENAI_API_KEY=<your api key>
+
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
