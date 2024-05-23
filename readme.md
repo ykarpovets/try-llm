@@ -34,15 +34,22 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## LLM models
 
-By default app uses Ollama model.
+By default app uses Ollama model. This model can perform slow on local machine. 
+
+Better option is to use OpenAI gpt-3.5-turbo model. It provides better performance and results.
 
 If you want to use OpenAI model then create env.local file in the root of the project and specify:
 ```
 LLM_MODEL=OpenAI
-VECTOR_STORE=chroma
+VECTOR_STORE=Chroma
 OPENAI_API_KEY=<your api key>
 
 ```
+Supported values for LLM_MODEL are: OpenAI, Ollama 
+> Ollama is default if not provided in the env variable
+
+Supported values for VECTOR_STORE are: Chroma, PgVector 
+> Chroma is default if not provided in the env variable
 
 ## Learn More
 
