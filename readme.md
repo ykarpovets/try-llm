@@ -36,7 +36,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 By default app uses Ollama model. This model can perform slow on local machine. 
 
-Better option is to use OpenAI gpt-3.5-turbo model. It provides better performance and results.
+Better option is to use OpenAI gpt-3.5-turbo model. It provides much better performance and results.
 
 If you want to use OpenAI model then create env.local file in the root of the project and specify:
 ```
