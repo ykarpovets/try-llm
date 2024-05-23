@@ -45,10 +45,12 @@ async function getSummaryForCandidate(candidate: Candidate) {
   const retriever = vectorStore.asRetriever({
     filter: { namespace: candidate.cv },
   });
-  const docs = await retriever.invoke("Summary of strongest skills and professional highlights");
+  const docs = await retriever.invoke(
+    "Summary of strongest skills and professional highlights",
+  );
   const llm = getChatModel();
   const prompt = new PromptTemplate({
-    template: `Provide summary of the {candidate} strongest skills and professional highlights based on the following: {text}`,
+    template: `Provide summary of the {candidate}'s strongest skills and professional highlights based on the following: {text}`,
     inputVariables: ["candidate", "text"],
   });
   const chain = loadSummarizationChain(llm, { type: "stuff", prompt });
