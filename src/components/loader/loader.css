@@ -1,33 +1,5 @@
 /* Loader.css */
 .loader {
-  display: flex;
-  position: fixed; /* Fixed positioning */
-  justify-content: center;
-  align-items: center;
-  z-index: 100; /* High z-index to overlay other elements */
-  top: 0; /* Position from the top */
-  left: 0; /* Position from the left */
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  border: none;
-}
-
-.loader::before {
-  content: "";
-  border: 16px solid white;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border-top: 16px solid rgb(148 163 184);
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  @apply fixed top-0 left-0 w-full h-full flex justify-center items-center z-[100] bg-[rgba(0,0,0,0.5)] border-none;
+  @apply before:border-[16px] before:rounded-full before:w-[100px] before:h-[100px] before:border-white before:border-t-slate-500 before:animate-spin;
 }

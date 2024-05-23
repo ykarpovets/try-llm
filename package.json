@@ -23,6 +23,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.51.4",
     "server-only": "^0.0.1",
+    "tailwindcss-animate": "^1.0.7",
     "winston": "^3.13.0"
   },
   "devDependencies": {
