@@ -38,8 +38,8 @@ export default function CvUpload() {
       }
     } finally {
       setLoading(false);
-      router.refresh();
       reset();
+      router.refresh();
     }
   };
 
