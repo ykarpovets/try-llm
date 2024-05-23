@@ -1,5 +1,5 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-The purpose of it is to be able to experiment with RAG based on the uploaded CV files to retrieve candidate  current profession and years of experience and provide summary.
+The purpose of it is to be able to experiment with RAG based on the uploaded CV files to retrieve candidate current profession and years of experience and provide summary.
 CV file samples have been obtained from the dataset https://www.kaggle.com/datasets/snehaanbhawal/resume-dataset.
 
 ## Getting Started
@@ -10,6 +10,7 @@ CV file samples have been obtained from the dataset https://www.kaggle.com/datas
 - [Rancher Desktop](https://docs.rancherdesktop.io/getting-started/installation/) or [Colima](https://github.com/abiosoft/colima) or use Docker Desktop.
 
 Run docker containers:
+
 ```bash
 docker-compose up -d
 ```
@@ -34,21 +35,25 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## LLM models
 
-By default app uses Ollama model. This model can perform slow on local machine. 
+By default app uses Ollama model. This model can perform slow on local machine.
 
 Better option is to use OpenAI gpt-3.5-turbo model. It provides much better performance and results.
 
 If you want to use OpenAI model then create env.local file in the root of the project and specify:
+
 ```
 LLM_MODEL=OpenAI
 VECTOR_STORE=Chroma
 OPENAI_API_KEY=<your api key>
 
 ```
-Supported values for LLM_MODEL are: OpenAI, Ollama 
+
+Supported values for LLM_MODEL are: OpenAI, Ollama
+
 > Ollama is default if not provided in the env variable
 
-Supported values for VECTOR_STORE are: Chroma, PgVector 
+Supported values for VECTOR_STORE are: Chroma, PgVector
+
 > Chroma is default if not provided in the env variable
 
 ## Learn More

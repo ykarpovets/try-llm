@@ -1,4 +1,4 @@
-import 'server-only';
+import "server-only";
 
 import pg from "pg";
 
@@ -22,7 +22,7 @@ async function addCandidate(candidate: string, cv: string) {
     await client.query("BEGIN");
     const res = await client.query(
       "INSERT INTO candidates (name, cv) VALUES ($1, $2) RETURNING id",
-      [candidate, cv]
+      [candidate, cv],
     );
     const id = res.rows[0].id;
     await client.query("COMMIT");
@@ -33,7 +33,7 @@ async function addCandidate(candidate: string, cv: string) {
   } finally {
     client.release();
   }
-} 
+}
 
 async function getCandidates(): Promise<Array<Candidate>> {
   const client = await pool.connect();
@@ -48,7 +48,9 @@ async function getCandidates(): Promise<Array<Candidate>> {
 async function getCandidate(id: number): Promise<Candidate> {
   const client = await pool.connect();
   try {
-    const res = await client.query("SELECT * FROM candidates WHERE id = $1", [id]);
+    const res = await client.query("SELECT * FROM candidates WHERE id = $1", [
+      id,
+    ]);
     return res.rows[0];
   } finally {
     client.release();

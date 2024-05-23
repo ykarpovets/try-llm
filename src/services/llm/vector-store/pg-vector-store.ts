@@ -3,7 +3,7 @@ import {
   DistanceStrategy,
   PGVectorStore,
 } from "@langchain/community/vectorstores/pgvector";
-import {getEmbeddings} from "@/services/llm/model";
+import { getEmbeddings } from "@/services/llm/model";
 import logger from "@/logger";
 
 const config = {
@@ -21,11 +21,8 @@ const config = {
   distanceStrategy: "cosine" as DistanceStrategy,
 };
 
-
-
 export default async function getPgVectorStore() {
   logger.info("use PGVectorStore");
   const embeddings = getEmbeddings();
-    return await PGVectorStore.initialize(embeddings, config);
+  return await PGVectorStore.initialize(embeddings, config);
 }
-

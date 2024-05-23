@@ -33,10 +33,7 @@ body {
   justify-content: center;
   min-height: 100vh;
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
+  background: linear-gradient(transparent, rgb(var(--background-end-rgb)))
     rgb(var(--background-start-rgb));
 }
 
