@@ -50,7 +50,10 @@ async function getSummaryForCandidate(candidate: Candidate) {
   );
   const llm = getChatModel();
   const prompt = new PromptTemplate({
-    template: `Provide summary of the {candidate}'s strongest skills and professional highlights based on the following: {text}`,
+    template: `
+    Please provide summary of the {candidate}'s strongest skills and professional highlights based on the following: {text}
+    Constraints: The summary should be concise not more than 10 sentences. It should not mention summary word.
+    `,
     inputVariables: ["candidate", "text"],
   });
   const chain = loadSummarizationChain(llm, { type: "stuff", prompt });
