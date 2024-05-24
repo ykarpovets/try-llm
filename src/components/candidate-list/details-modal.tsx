@@ -65,8 +65,8 @@ function DetailsModal() {
   return (
     <>
       {modal && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-white w-1/2 overflow-auto m-auto p-10 border border-slate-600">
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-opacity-40">
+          <div className="bg-[--background] w-1/2 overflow-auto m-auto p-10 border border-slate-600">
             <div className="flex flex-col items-center">
               {isLoading ? (
                 <Placeholder />
