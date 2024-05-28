@@ -28,21 +28,14 @@
   --background-end: rgb(60, 70, 77);
 }
 
-
 body {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   min-height: 100vh;
   color: var(--foreground);
-  background: linear-gradient(to bottom, var(--background-start), var(--background-end));
-}
-
-
-
-#page {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 800px;
-  padding: 1rem;
+  background: linear-gradient(
+    to bottom,
+    var(--background-start),
+    var(--background-end)
+  );
 }

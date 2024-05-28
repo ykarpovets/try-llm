@@ -24,7 +24,7 @@ async function extractDetailsFromCV(query: string, candidate: Candidate) {
   logger.info(`Query "${query}" for candidate ${candidate.name}`);
   const vectorStore = await getVectorStore();
   const retriever = vectorStore.asRetriever({
-    filter: { namespace: candidate.cv },
+    filter: { candidate: candidate.name },
   });
   const llm = getChatModel();
   const prompt = ChatPromptTemplate.fromTemplate(template);
@@ -43,7 +43,7 @@ async function getSummaryForCandidate(candidate: Candidate) {
   logger.info(`Get summary for candidate ${candidate.name}`);
   const vectorStore = await getVectorStore();
   const retriever = vectorStore.asRetriever({
-    filter: { namespace: candidate.cv },
+    filter: { candidate: candidate.name },
   });
   const docs = await retriever.invoke(
     "Summary of strongest skills and professional highlights",
