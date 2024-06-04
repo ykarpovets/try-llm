@@ -8,8 +8,13 @@ async function loadCV(cvFile: File) {
   logger.info(`Load CV ${cvFile.name} file and split into chunks`);
   const candidateName = randomName();
 
-  const loader = new PDFLoader(cvFile);
+  const loader = new PDFLoader(cvFile, { splitPages: false});
+  // we should get one document in the array as we are not splitting the pages
   const docs = await loader.load();
+  // add metadata to the document
+  docs[0].metadata.candidate = candidateName;
+  docs[0].metadata.filename = cvFile.name;
+  docs[0].metadata.type = cvFile.type;
 
   /* Additional steps : Split text into chunks with any TextSplitter. You can then use it as context or save it to memory afterwards. */
   const textSplitter = new RecursiveCharacterTextSplitter({
@@ -17,13 +22,8 @@ async function loadCV(cvFile: File) {
     chunkOverlap: 200,
   });
 
+  logger.info(`Split document ${cvFile.name} into chunks`)
   const splitChunks = await textSplitter.splitDocuments(docs);
-  splitChunks.forEach((chunk) => {
-    chunk.metadata.candidate = candidateName;
-    chunk.metadata.filename = cvFile.name;
-    chunk.metadata.type = cvFile.type;
-  });
-
   const vectorStore = await getVectorStore();
   logger.info("Add documents to vector store");
   await vectorStore.addDocuments(splitChunks);

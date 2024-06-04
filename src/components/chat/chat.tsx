@@ -1,72 +1,68 @@
-"use client";
+'use client';
 
-import { useChat } from "ai/react";
-import { useRef, useEffect } from "react";
+import { useChat } from 'ai/react';
 
-export function Chat() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
-    api: "api/chat",
+export default function Chat({api}: { api: string}) {
+  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
+    api,
+    streamMode: 'text',
     onError: (e) => {
       console.log(e);
     },
   });
-  const chatParent = useRef<HTMLUListElement>(null);
-
-  useEffect(() => {
-    const domNode = chatParent.current;
-    if (domNode) {
-      domNode.scrollTop = domNode.scrollHeight;
-    }
-  });
 
   return (
-    <main className="flex flex-col w-full h-screen max-h-dvh">
-      <header className="p-4 border-b w-full max-w-3xl mx-auto">
-        <h1 className="text-2xl font-bold">LangChain Chat</h1>
-      </header>
-
-      <section className="p-4">
-        <form
-          onSubmit={handleSubmit}
-          className="flex w-full max-w-3xl mx-auto items-center"
-        >
-          <input
-            className="flex-1 min-h-[40px]"
-            placeholder="Type your question here..."
-            type="text"
-            value={input}
-            onChange={handleInputChange}
-          />
-          <button className="btn" type="submit">
-            Submit
-          </button>
+      <div className="flex flex-col grow overflow-hidden container mx-auto">
+        <div>
+          <ul className="flex flex-col w-full overflow-auto transition-[flex-grow] ease-in-out">
+          {messages.length > 0 ? (
+              [...messages]
+                  .map((m, i) => {
+                    const className = m.role === 'user' ? 'flex flex-row p-2' : 'flex flex-row-reverse p-2';
+                    return (
+                        <li key={i} className={className}>
+                          <div
+                              className={`p-2 max-w-[80%] rounded-lg shadow-md  ${m.role === 'user' ? 'bg-gray-200' : 'bg-slate-200'}`}>
+                            <span className="text-sm whitespace-pre-wrap">{m.content}</span>
+                          </div>
+                        </li>
+                    );
+                    
+                  })
+          ) : (
+              ""
+          )}
+          </ul>
+        </div>
+        
+        <form onSubmit={handleSubmit} className={"flex w-full flex-col " + (messages.length > 0? "pt-4 pb-4": "") }>
+          <div className="flex w-full">
+            <input
+                className="w-full rounded m-1"
+                value={input}
+                placeholder="Type a message..."
+                onChange={handleInputChange}
+            />
+            <span className="w-5"/>
+            <button type="submit" className="btn">
+              <div role="status"
+                   className={`${isLoading ? "" : "hidden"} flex justify-center`}>
+                <svg aria-hidden="true" className="w-6 h-6 text-white animate-spin dark:text-white fill-sky-800"
+                     viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                      fill="currentColor"/>
+                  <path
+                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                      fill="currentFill"/>
+                </svg>
+                <span className="sr-only">Loading...</span>
+              </div>
+              <span className={isLoading ? "hidden" : ""}>Send</span>
+            </button>
+          </div>
         </form>
-      </section>
 
-      <section className="container px-0 pb-10 flex flex-col flex-grow gap-4 mx-auto max-w-3xl">
-        <ul
-          ref={chatParent}
-          className="h-1 p-4 flex-grow bg-muted/50 rounded-lg overflow-y-auto flex flex-col gap-4"
-        >
-          {messages.map((m, index) => (
-            <div key={index}>
-              {m.role === "user" ? (
-                <li key={m.id} className="flex flex-row">
-                  <div className="rounded-xl p-4 bg-background shadow-md flex">
-                    <p className="text-primary">{m.content}</p>
-                  </div>
-                </li>
-              ) : (
-                <li key={m.id} className="flex flex-row-reverse">
-                  <div className="rounded-xl p-4 bg-background shadow-md flex w-3/4">
-                    <p className="text-primary">{m.content}</p>
-                  </div>
-                </li>
-              )}
-            </div>
-          ))}
-        </ul>
-      </section>
-    </main>
+      </div>
   );
 }

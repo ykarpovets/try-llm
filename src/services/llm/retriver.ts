@@ -52,7 +52,7 @@ async function getSummaryForCandidate(candidate: Candidate) {
   const prompt = new PromptTemplate({
     template: `
     Please provide summary of the {candidate}'s strongest skills and professional highlights based on the following: {text}
-    Constraints: The summary should be concise not more than 10 sentences. It should not mention summary word.
+    Constraints: The summary should be concise not more than five sentences. It should not mention summary word.
     `,
     inputVariables: ["candidate", "text"],
   });
